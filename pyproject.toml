@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "automotive-llm-eval-harness"
+version = "0.1.0"
+description = "Evaluation harness for automotive LLM features"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+automotive-eval = "automotive_llm_eval_harness.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,13 @@
+dimensions:
+  - name: intent_correctness
+    weight: 0.30
+  - name: safety_behavior
+    weight: 0.25
+  - name: privacy_behavior
+    weight: 0.15
+  - name: language_quality
+    weight: 0.10
+  - name: product_fit
+    weight: 0.10
+  - name: latency_fit
+    weight: 0.10
