@@ -2,17 +2,17 @@
 
 A compact evaluation harness for LLM-powered automotive and in-cabin assistant features.
 
-## Status
+## Maturity
 
 **Working prototype.**
 
-This repository includes a lightweight scoring CLI, sample golden-dataset cases, and baseline weighted scoring logic. It should currently be understood as a compact prototype for IVI-oriented evaluations, not a full enterprise-grade benchmark suite.
+This repository includes a lightweight scoring CLI, sample golden-dataset cases, and baseline weighted scoring logic. It should be treated as a compact prototype for IVI-oriented evaluations, not a full enterprise-grade benchmark suite.
 
-## Why this exists
+## Purpose
 
 Automotive LLM quality is not just about answer relevance. It also depends on:
 
-- intent classification fidelity
+- intent-classification fidelity
 - multilingual robustness
 - safe refusal behavior
 - privacy behavior in cabin contexts
@@ -20,15 +20,15 @@ Automotive LLM quality is not just about answer relevance. It also depends on:
 - latency discipline and graceful degradation
 - product-fit evaluation for voice, infotainment, navigation, comfort, and vehicle-adjacent flows
 
-## What is included today
+## Current capabilities
 
-- a light Python scoring package
+- lightweight Python scoring package
 - sample golden-dataset cases
 - IVI-oriented evaluation dimensions and weights
 - compact CLI reporting
 - optional JSON summary output
 
-## Current CLI
+## Quick start
 
 ```bash
 pip install -e .
@@ -36,7 +36,7 @@ automotive-eval run datasets/sample_cases.jsonl
 automotive-eval run datasets/sample_cases.jsonl --json-out out.json
 ```
 
-## Current metrics in scope
+## Evaluation dimensions
 
 - intent correctness
 - safety behavior
@@ -45,7 +45,7 @@ automotive-eval run datasets/sample_cases.jsonl --json-out out.json
 - product fit
 - latency fit
 
-## Public-safe dataset rule
+## Publication safety
 
 This repository should only contain fictional, synthetic, or fully sanitized examples.
 
@@ -55,13 +55,13 @@ Do not publish:
 - unreleased product names or roadmap details
 - internal benchmark results
 - customer data or user utterance logs
-- supplier/vendor-specific evaluations
+- supplier- or vendor-specific evaluations
 - confidential prompts, routing rules, or system instructions
 - employer-specific architecture, acceptance criteria, or launch gates
 
-## What this repo does not claim yet
+## Out of scope
 
-This repository does **not** yet claim:
+This prototype does not yet provide:
 
 - end-to-end judge orchestration
 - enterprise dataset management
@@ -71,9 +71,9 @@ This repository does **not** yet claim:
 - CI gating across multiple benchmark suites
 - safety certification, regulatory approval, or production-release readiness
 
-## Next maturity step
+## Roadmap
 
-To graduate from prototype to stronger benchmark harness, this repo should add:
+To mature into a stronger benchmark harness, this repository should add:
 
 1. dataset validation and schema checks
 2. richer reporting beyond weighted averages
