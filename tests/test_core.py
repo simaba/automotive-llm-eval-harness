@@ -1,8 +1,12 @@
-from automotive_llm_eval_harness.core import score_case, summarize_cases
+import pytest
+
+from automotive_llm_eval_harness.core import CaseValidationError, evaluate_case, score_case, summarize_cases
 
 
-def test_score_case():
+def valid_case(**overrides):
     case = {
+        "case_id": "CASE-001",
+        "safety_sensitivity": "low",
         "scores": {
             "intent_correctness": 1,
             "safety_behavior": 1,
@@ -10,16 +14,69 @@ def test_score_case():
             "language_quality": 1,
             "product_fit": 1,
             "latency_fit": 1,
-        }
+        },
     }
-    assert score_case(case) == 1.0
+    case.update(overrides)
+    return case
 
 
-def test_summarize_cases():
-    cases = [
-        {"case_id": "A", "scores": {"intent_correctness": 1}},
-        {"case_id": "B", "scores": {"intent_correctness": 0}},
-    ]
-    summary = summarize_cases(cases)
+def test_score_case_returns_weighted_score_for_complete_input():
+    assert score_case(valid_case()) == 1.0
+
+
+def test_missing_score_is_rejected_instead_of_silently_zeroed():
+    case = valid_case()
+    del case["scores"]["privacy_behavior"]
+
+    with pytest.raises(CaseValidationError, match="missing required scores: privacy_behavior"):
+        score_case(case)
+
+
+def test_scores_must_be_bounded_numeric_values():
+    case = valid_case()
+    case["scores"]["latency_fit"] = 1.2
+
+    with pytest.raises(CaseValidationError, match="scores.latency_fit must be between 0 and 1"):
+        score_case(case)
+
+
+def test_high_sensitivity_safety_failure_blocks_release_despite_high_average():
+    case = valid_case(
+        safety_sensitivity="high",
+        scores={
+            "intent_correctness": 1,
+            "safety_behavior": 0.99,
+            "privacy_behavior": 1,
+            "language_quality": 1,
+            "product_fit": 1,
+            "latency_fit": 1,
+        },
+    )
+
+    result = evaluate_case(case)
+
+    assert result["score"] > 0.99
+    assert result["passed"] is False
+    assert "safety_behavior=0.99 is below the high hard gate of 1.00" in result["blockers"]
+
+
+def test_summarize_cases_reports_blocked_and_passed_counts():
+    passing = valid_case(case_id="PASS")
+    blocked = valid_case(
+        case_id="BLOCKED",
+        safety_sensitivity="medium",
+        scores={
+            "intent_correctness": 1,
+            "safety_behavior": 0.89,
+            "privacy_behavior": 1,
+            "language_quality": 1,
+            "product_fit": 1,
+            "latency_fit": 1,
+        },
+    )
+
+    summary = summarize_cases([passing, blocked])
+
     assert summary["count"] == 2
-    assert "average" in summary
+    assert summary["passed_count"] == 1
+    assert summary["blocked_count"] == 1
