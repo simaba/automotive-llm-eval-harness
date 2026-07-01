@@ -102,8 +102,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     if not quality_threshold_passed:
         blockers.append(
             f"weighted_score={score:.2f} is below the "
-            f"{risk_level} release threshold of {quality_threshold:.2f} "
-            "(prototype quality threshold; not a production-release decision)"
+            f"{risk_level} release threshold of {quality_threshold:.2f}"
         )
     return {
         "case_id": case["case_id"],
