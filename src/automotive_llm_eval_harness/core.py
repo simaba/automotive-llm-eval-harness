@@ -27,6 +27,7 @@ QUALITY_THRESHOLDS_BY_RISK = {
     "high": 0.85,
     "critical": 0.90,
 }
+MINIMUM_RELEASE_SCORES = QUALITY_THRESHOLDS_BY_RISK
 
 
 class CaseValidationError(ValueError):
@@ -65,10 +66,7 @@ def validate_case(case: dict[str, Any]) -> list[str]:
     if missing:
         raise CaseValidationError(f"missing required scores: {', '.join(missing)}")
 
-    normalized = {
-        name: _validated_score(scores[name], name)
-        for name in SCORE_DIMENSIONS
-    }
+    normalized = {name: _validated_score(scores[name], name) for name in SCORE_DIMENSIONS}
     blockers = []
     for name, minimum in HARD_GATE_MINIMUMS[risk_level].items():
         if normalized[name] < minimum:
