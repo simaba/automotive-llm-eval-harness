@@ -4,6 +4,7 @@ import argparse
 import json
 
 from .core import CaseValidationError, load_cases, summarize_cases
+from .manifest import RunManifestError, load_run_manifest, reproducibility_record
 
 
 def main() -> int:
@@ -12,6 +13,10 @@ def main() -> int:
 
     run = sub.add_parser("run")
     run.add_argument("dataset")
+    run.add_argument(
+        "--manifest",
+        help="Optional JSON run manifest for dataset/rubric/evaluator/harness/model provenance.",
+    )
     run.add_argument("--json-out")
 
     args = parser.parse_args()
@@ -20,14 +25,17 @@ def main() -> int:
         return 1
 
     try:
+        manifest = load_run_manifest(args.manifest) if args.manifest else None
         summary = summarize_cases(load_cases(args.dataset))
-    except (OSError, CaseValidationError) as exc:
+        summary["reproducibility"] = reproducibility_record(args.dataset, manifest)
+    except (OSError, CaseValidationError, RunManifestError) as exc:
         parser.error(str(exc))
 
     print(f"cases: {summary['count']}")
     print(f"average_score: {summary['average']:.4f}")
     print(f"passed: {summary['passed_count']}")
     print(f"blocked: {summary['blocked_count']}")
+    print(f"reproducibility: {summary['reproducibility']['status']}")
     for row in summary["results"]:
         status = "PASS" if row["passed"] else "BLOCKED"
         print(f"- {row['case_id']}: {row['score']:.4f} [{status}]")
