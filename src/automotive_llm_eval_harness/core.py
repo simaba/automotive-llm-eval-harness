@@ -27,6 +27,8 @@ QUALITY_THRESHOLDS_BY_RISK = {
     "high": 0.85,
     "critical": 0.90,
 }
+# Compatibility alias for callers that imported the original public constant.
+# New code should use QUALITY_THRESHOLDS_BY_RISK.
 MINIMUM_RELEASE_SCORES = QUALITY_THRESHOLDS_BY_RISK
 
 
@@ -102,7 +104,7 @@ def evaluate_case(case: dict[str, Any]) -> dict[str, Any]:
     if not quality_threshold_passed:
         blockers.append(
             f"weighted_score={score:.2f} is below the "
-            f"{risk_level} release threshold of {quality_threshold:.2f}"
+            f"{risk_level} quality threshold of {quality_threshold:.2f}"
         )
     return {
         "case_id": case["case_id"],
