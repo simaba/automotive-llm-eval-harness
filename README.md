@@ -12,6 +12,7 @@ This repository validates JSONL case artifacts, scores the values supplied in th
 
 - [Methodology](METHODOLOGY.md): dimensions, weights, gates, thresholds, reproducibility context, and limitations.
 - [Dataset Card](DATASET_CARD.md): data policy, case format, coverage expectations, and exclusions.
+- [Run reproducibility](docs/REPRODUCIBILITY.md): how manifests, dataset digests, run count, seed policy, and permission scope make a prototype score reviewable.
 - [Sample run manifest](datasets/sample_run_manifest.json): required dataset, rubric, evaluator, harness, model, run-count, seed-policy, permission-scope, date, and exclusion context.
 - [Public Release Checklist](docs/PUBLIC_RELEASE_CHECKLIST.md): pre-publication review steps.
 - [Draft v0.1.0 notes](docs/releases/v0.1.0.md): intended public-release scope.
