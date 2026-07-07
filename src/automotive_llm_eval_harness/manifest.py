@@ -17,6 +17,8 @@ REQUIRED_TEXT_FIELDS = (
     "harness_version",
     "model_version",
     "run_date",
+    "seed_policy",
+    "permission_scope",
 )
 
 
@@ -48,6 +50,10 @@ def validate_run_manifest(payload: dict[str, Any]) -> None:
         date.fromisoformat(payload["run_date"])
     except ValueError as exc:
         raise RunManifestError("run_date must use YYYY-MM-DD") from exc
+
+    run_count = payload.get("run_count")
+    if not isinstance(run_count, int) or isinstance(run_count, bool) or run_count < 1:
+        raise RunManifestError("run_count must be a positive integer")
 
     if payload.get("synthetic_data") is not True:
         raise RunManifestError("synthetic_data must be true for public prototype runs")
@@ -87,7 +93,7 @@ def reproducibility_record(
                 "status": "manifest_not_supplied",
                 "note": (
                     "Ad-hoc prototype score only. Supply --manifest to record dataset, rubric, "
-                    "evaluator, harness, model, date, and exclusions."
+                    "evaluator, harness, model, run count, seed policy, permissions, date, and exclusions."
                 ),
             }
         )
