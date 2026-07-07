@@ -6,6 +6,9 @@
   "harness_version": "manual-score-fixture",
   "model_version": "not-applicable-for-fixture",
   "run_date": "2026-07-03",
+  "run_count": 1,
+  "seed_policy": "not-applicable: fixture scores are supplied deterministically",
+  "permission_scope": "not-applicable: this scorer performs no tool calls or model execution",
   "synthetic_data": true,
   "known_exclusions": [
     "No real vehicle telemetry, user utterances, or production outputs are included.",
