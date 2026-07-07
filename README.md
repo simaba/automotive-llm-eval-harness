@@ -12,7 +12,7 @@ This repository validates JSONL case artifacts, scores the values supplied in th
 
 - [Methodology](METHODOLOGY.md): dimensions, weights, gates, thresholds, reproducibility context, and limitations.
 - [Dataset Card](DATASET_CARD.md): data policy, case format, coverage expectations, and exclusions.
-- [Sample run manifest](datasets/sample_run_manifest.json): required provenance for a reviewable scoring report.
+- [Sample run manifest](datasets/sample_run_manifest.json): required dataset, rubric, evaluator, harness, model, run-count, seed-policy, permission-scope, date, and exclusion context.
 - [Public Release Checklist](docs/PUBLIC_RELEASE_CHECKLIST.md): pre-publication review steps.
 - [Draft v0.1.0 notes](docs/releases/v0.1.0.md): intended public-release scope.
 
@@ -35,7 +35,7 @@ Automotive LLM quality is not only answer relevance. This prototype makes the fo
 - risk-tiered safety and privacy hard gates
 - risk-tiered weighted quality thresholds
 - CLI and JSON output that distinguish hard-gate status from overall quality status
-- dataset digest plus manifest-based dataset/rubric/evaluator/harness/model/date/exclusions capture
+- dataset digest plus manifest-based dataset/rubric/evaluator/harness/model/run-count/seed-policy/permission-scope/date/exclusions capture
 - automated tests for malformed input, prototype quality semantics, and manifest validation
 
 ## Quick start
