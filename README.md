@@ -1,17 +1,19 @@
 # Automotive LLM Eval Harness
 
-A compact evaluation harness for **fictional, synthetic, or fully sanitized** automotive and in-cabin assistant scenarios.
+A compact evaluation **scorer** for **fictional, synthetic, or fully sanitized** automotive and in-cabin assistant scenarios.
 
 ## Maturity
 
 **Working prototype.**
 
-This repository provides a lightweight scoring CLI, validated JSONL input, illustrative hard safety/privacy gates, risk-tiered quality thresholds, and public-safe example cases. It is a compact prototype for structured IVI-oriented evaluation—not a full benchmark program or enterprise validation suite.
+This repository validates JSONL case artifacts, scores the values supplied in those artifacts, applies illustrative safety/privacy gates and quality thresholds, and produces transparent reports. It does **not** yet generate model responses, orchestrate judges, or independently measure an LLM system.
 
 ## Start here
 
-- [Methodology](METHODOLOGY.md): dimensions, weights, gates, thresholds, and limitations.
+- [Methodology](METHODOLOGY.md): dimensions, weights, gates, thresholds, reproducibility context, and limitations.
 - [Dataset Card](DATASET_CARD.md): data policy, case format, coverage expectations, and exclusions.
+- [Run reproducibility](docs/REPRODUCIBILITY.md): how manifests, dataset digests, run count, seed policy, and permission scope make a prototype score reviewable.
+- [Sample run manifest](datasets/sample_run_manifest.json): required dataset, rubric, evaluator, harness, model, run-count, seed-policy, permission-scope, date, and exclusion context.
 - [Public Release Checklist](docs/PUBLIC_RELEASE_CHECKLIST.md): pre-publication review steps.
 - [Draft v0.1.0 notes](docs/releases/v0.1.0.md): intended public-release scope.
 
@@ -29,20 +31,26 @@ Automotive LLM quality is not only answer relevance. This prototype makes the fo
 ## Current capabilities
 
 - lightweight Python scoring package and CLI
-- sample public-safe JSONL cases
+- sample public-safe JSONL cases and a reproducibility manifest
 - required score validation and duplicate case-ID detection
 - risk-tiered safety and privacy hard gates
 - risk-tiered weighted quality thresholds
 - CLI and JSON output that distinguish hard-gate status from overall quality status
-- automated tests for malformed input and release-decision semantics
+- dataset digest plus manifest-based dataset/rubric/evaluator/harness/model/run-count/seed-policy/permission-scope/date/exclusions capture
+- automated tests for malformed input, prototype quality semantics, and manifest validation
 
 ## Quick start
 
 ```bash
 python -m pip install -e .
-automotive-eval run datasets/sample_cases.jsonl
-automotive-eval run datasets/sample_cases.jsonl --json-out out.json
+automotive-eval run datasets/sample_cases.jsonl \
+  --manifest datasets/sample_run_manifest.json
+automotive-eval run datasets/sample_cases.jsonl \
+  --manifest datasets/sample_run_manifest.json \
+  --json-out out.json
 ```
+
+A manifest is optional for an ad-hoc local score, but the report will mark the run as `manifest_not_supplied`. Use a manifest for any result you intend to share, compare, or revisit.
 
 ## Publication safety
 
@@ -61,7 +69,7 @@ Do not publish:
 
 This prototype does not provide:
 
-- end-to-end judge orchestration
+- model-output generation or end-to-end judge orchestration
 - enterprise dataset management
 - pairwise model comparisons or a public leaderboard
 - scenario grouping, slice dashboards, or regression history
@@ -74,9 +82,9 @@ The next substantive iteration should add:
 
 1. a realistic but fully synthetic multilingual benchmark pack
 2. scenario grouping and slice analysis
-3. reproducible regression-run history
+3. reproducible regression-run history built on the manifest format
 4. richer reporting beyond case-level summaries
-5. dataset/rubric/evaluator version capture for benchmark reports
+5. evaluator adapters that create scored case artifacts from controlled inputs and outputs
 
 ## Scope and disclaimer
 

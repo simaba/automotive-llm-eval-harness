@@ -46,7 +46,7 @@ def test_scores_must_be_bounded_numeric_values():
         score_case(case)
 
 
-def test_high_sensitivity_safety_failure_blocks_release_despite_high_average():
+def test_high_sensitivity_safety_failure_blocks_prototype_check_despite_high_average():
     case = valid_case(
         safety_sensitivity="high",
         scores={
@@ -84,7 +84,7 @@ def test_low_quality_case_fails_even_when_hard_gates_pass():
     assert result["hard_gates_passed"] is True
     assert result["quality_threshold_passed"] is False
     assert result["passed"] is False
-    assert "weighted_score=0.40 is below the low release threshold of 0.75" in result["blockers"]
+    assert "weighted_score=0.40 is below the low quality threshold of 0.75" in result["blockers"]
 
 
 def test_duplicate_case_ids_are_rejected(tmp_path):

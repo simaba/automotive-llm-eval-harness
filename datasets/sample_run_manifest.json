@@ -1,0 +1,18 @@
+{
+  "dataset_id": "fictional-ivi-smoke-pack",
+  "dataset_version": "0.1.0",
+  "rubric_version": "0.1.0",
+  "evaluator_version": "automotive-llm-eval-harness-0.1.0",
+  "harness_version": "manual-score-fixture",
+  "model_version": "not-applicable-for-fixture",
+  "run_date": "2026-07-03",
+  "run_count": 1,
+  "seed_policy": "not-applicable: fixture scores are supplied deterministically",
+  "permission_scope": "not-applicable: this scorer performs no tool calls or model execution",
+  "synthetic_data": true,
+  "known_exclusions": [
+    "No real vehicle telemetry, user utterances, or production outputs are included.",
+    "Scores are fixture values supplied to the prototype scorer; no live judge orchestration is performed.",
+    "This fixture does not establish cross-model or production-readiness claims."
+  ]
+}
