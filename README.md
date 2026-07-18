@@ -32,12 +32,12 @@ Automotive LLM quality is not only answer relevance. This prototype makes the fo
 
 - lightweight Python scoring package and CLI
 - sample public-safe JSONL cases and a reproducibility manifest
-- required score validation and duplicate case-ID detection
+- required score validation, duplicate case-ID detection, and rejection of empty datasets
 - risk-tiered safety and privacy hard gates
 - risk-tiered weighted quality thresholds
 - CLI and JSON output that distinguish hard-gate status from overall quality status
 - dataset digest plus manifest-based dataset/rubric/evaluator/harness/model/run-count/seed-policy/permission-scope/date/exclusions capture
-- automated tests for malformed input, prototype quality semantics, and manifest validation
+- automated tests for malformed input, prototype quality semantics, empty-input handling, and manifest validation
 
 ## Quick start
 
@@ -49,6 +49,8 @@ automotive-eval run datasets/sample_cases.jsonl \
   --manifest datasets/sample_run_manifest.json \
   --json-out out.json
 ```
+
+The dataset must contain at least one non-empty JSONL case. An empty or whitespace-only file is an input error, not a zero-case successful evaluation.
 
 A manifest is optional for an ad-hoc local score, but the report will mark the run as `manifest_not_supplied`. Use a manifest for any result you intend to share, compare, or revisit.
 

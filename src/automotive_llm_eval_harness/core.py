@@ -137,12 +137,21 @@ def load_cases(path: str | Path) -> list[dict[str, Any]]:
         if isinstance(case_id, str):
             seen_case_ids.add(case_id)
         rows.append(row)
+
+    if not rows:
+        raise CaseValidationError(
+            "evaluation dataset contains no cases; at least one non-empty JSONL row is required"
+        )
     return rows
 
 
 def summarize_cases(cases: list[dict[str, Any]]) -> dict[str, Any]:
+    if not cases:
+        raise CaseValidationError(
+            "cannot summarize an empty case set; at least one validated case is required"
+        )
     results = [evaluate_case(case) for case in cases]
-    average = round(sum(row["score"] for row in results) / len(results), 4) if results else 0.0
+    average = round(sum(row["score"] for row in results) / len(results), 4)
     return {
         "count": len(results),
         "average": average,
