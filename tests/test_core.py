@@ -90,12 +90,33 @@ def test_low_quality_case_fails_even_when_hard_gates_pass():
 def test_duplicate_case_ids_are_rejected(tmp_path):
     dataset = tmp_path / "cases.jsonl"
     dataset.write_text(
-        "{\"case_id\": \"DUP\"}\n{\"case_id\": \"DUP\"}\n",
+        '{"case_id": "DUP"}\n{"case_id": "DUP"}\n',
         encoding="utf-8",
     )
 
     with pytest.raises(CaseValidationError, match="duplicate case_id on line 2: DUP"):
         load_cases(dataset)
+
+
+def test_empty_file_is_rejected(tmp_path):
+    dataset = tmp_path / "empty.jsonl"
+    dataset.write_text("", encoding="utf-8")
+
+    with pytest.raises(CaseValidationError, match="contains no cases"):
+        load_cases(dataset)
+
+
+def test_whitespace_only_dataset_is_rejected(tmp_path):
+    dataset = tmp_path / "whitespace.jsonl"
+    dataset.write_text("\n  \n\t\n", encoding="utf-8")
+
+    with pytest.raises(CaseValidationError, match="contains no cases"):
+        load_cases(dataset)
+
+
+def test_direct_empty_summary_is_rejected():
+    with pytest.raises(CaseValidationError, match="empty case set"):
+        summarize_cases([])
 
 
 def test_summarize_cases_reports_blocked_and_passed_counts():
