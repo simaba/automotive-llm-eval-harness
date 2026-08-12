@@ -24,6 +24,14 @@ Complete this checklist before making the repository public or publishing a vers
 - [ ] Any reported result includes dataset/rubric/evaluator versions and known limitations.
 - [ ] No public material claims safety certification, regulatory approval, or production readiness.
 
+## Repository hardening (recommended)
+
+- [ ] Maintain a fully synthetic multilingual benchmark pack when multilingual behavior is in scope.
+- [ ] Validate dataset rows against the repository schema before evaluation.
+- [ ] Keep scoring weights, aggregation rules, and limitations documented.
+- [ ] Keep sample CLI output aligned with current behavior.
+- [ ] Verify the documented setup and test path from a clean environment before the first public release.
+
 ## Release decision
 
 - [ ] Create the release as a draft, verify its notes and assets, then publish.
