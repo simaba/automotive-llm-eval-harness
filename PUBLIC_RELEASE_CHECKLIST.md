@@ -1,5 +1,5 @@
 # Public Release Checklist
 
-The canonical public-release checklist for this repository is [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md).
+The maintained checklist is [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md).
 
-This root-level file is retained as a stable compatibility pointer for existing links. Update the canonical checklist in `docs/` so publication requirements do not diverge across two copies.
+This file remains only to preserve existing links. Make checklist changes in the `docs/` version.
